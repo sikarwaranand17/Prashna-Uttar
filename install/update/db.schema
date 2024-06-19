@@ -1,0 +1,45 @@
+ALTER TABLE `[DBTP]answers` ADD `anonymous` TINYINT(1) NOT NULL AFTER `dislikes`;
+ALTER TABLE `[DBTP]questions` ADD `shares` int(11) NOT NULL AFTER `dislikes`;
+CREATE TABLE `[DBTP]spaces` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `admins` varchar(500) NOT NULL,
+  `moderators` varchar(500) NOT NULL,
+  `contributors` varchar(500) NOT NULL,
+  `name` varchar(99) NOT NULL,
+  `tagline` varchar(300) NOT NULL,
+  `description` varchar(500) NOT NULL,
+  `feed` varchar(300) NOT NULL,
+  `follows` int(11) NOT NULL,
+  `views` int(11) NOT NULL,
+  `slug` varchar(99) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `avatar` int(11) NOT NULL,
+  `cover` int(11) NOT NULL,
+  `open_post` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE `[DBTP]spaces`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `[DBTP]spaces`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
+ALTER TABLE `[DBTP]questions` ADD `item_type` VARCHAR(30) NOT NULL AFTER `anonymous`;
+  
+ALTER TABLE `[DBTP]questions` ADD `space_id` INT(11) NOT NULL AFTER `user_id`;
+
+ALTER TABLE `[DBTP]notifications` CHANGE `msg` `msg` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+UPDATE `[DBTP]groups` SET `privileges` = 'index.read,pages.read,error-404.read,index.notifications,index.post,index.feed,feed.follow,questions.read,questions.interact,post.read,questions.create,questions.power,questions.update,questions.delete,spaces.read,spaces.interact,spaces.read,spaces.create,spaces.power,spaces.update,spaces.delete,answers.read,answers.create,answers.power,answers.update,answers.delete,users.read,users.follow,users.update,users.changepass,users.changemail,users.delete,admin.read,dashboard.read,general_settings.update,profanity_filter.update,pending.read,pending.update,pages.read,pages.update,adminusers.read,adminusers.update,adminusers.changepass,adminusers.changemail,adminusers.changeusername,adminusers.power,adminusers.suspend,adminusers.delete,admintopics.read,admintopics.update,admintopics.delete,admanager.read,admanager.create,admanager.update,admanager.delete,groups.read,groups.create,groups.update,groups.delete' WHERE `id` = 1;
+
+UPDATE `[DBTP]groups` SET `privileges` = 'index.read,pages.read,error-404.read,questions.read,spaces.read,users.read,pages.read' WHERE `id` = 2;
+
+UPDATE `[DBTP]groups` SET `privileges` = 'index.read,pages.read,error-404.read,index.notifications,index.post,index.feed,feed.follow,questions.read,questions.interact,post.read,questions.create,questions.update,spaces.read,spaces.interact,spaces.read,spaces.create,spaces.update,spaces.delete,answers.read,answers.create,answers.update,users.read,users.follow,users.update,users.changepass,users.delete,pages.read' WHERE `id` = 3;
+
+UPDATE `[DBTP]functions` SET `value` = 'a:14:{s:9:"site_name";s:7:"Pearls!";s:9:"site_logo";i:0;s:16:"site_description";s:21:"Questions and Answers";s:13:"site_keywords";s:23:"Questions,Answers,Quora";s:11:"site_status";s:1:"1";s:9:"site_lang";s:7:"English";s:11:"closure_msg";s:48:"Site closed for maintenance.. please stay tuned!";s:8:"url_type";s:4:"slug";s:10:"q_approval";s:1:"0";s:10:"a_approval";s:1:"0";s:22:"spaces_classifications";s:57:"General,Music,Movies,History,World,Photography,Technology";s:9:"reg_group";s:1:"3";s:6:"social";s:1:"1";s:13:"public_access";s:1:"1";}' WHERE `id` = 1;
+
+ALTER TABLE `[DBTP]notifications` CHANGE `msg` `msg` MEDIUMTEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+
+ALTER TABLE `[DBTP]questions` ADD `tags` TEXT NOT NULL AFTER `feed`;
+ALTER TABLE `[DBTP]spaces` ADD `tags` TEXT NOT NULL AFTER `feed`;
